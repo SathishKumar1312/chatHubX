@@ -1,7 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const path = require('path');
 const connectToDB = require('./db/connectDB');
 
 const authRoute = require('./routes/authRoute');
@@ -11,7 +10,7 @@ require('dotenv').config();
 
 const port = process.env.PORT || 5001;
 
-app.use(cors({origin:'http://localhost:5173', credentials: true}));
+app.use(cors({origin:['https://chathubx.onrender.com', 'http://localhost:5173'], credentials: true}));
 
 connectToDB();
 
@@ -23,13 +22,9 @@ app.use(cookieParser());
 app.use('/api/auth',authRoute);
 app.use('/api/messages',messageRoute);
 
-if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
-	});
-}
+app.get('/',(req,res)=>{
+	res.send('hello world!')
+})
 
 server.listen(port,()=>{
 	console.log(`server is running on ${port}`)

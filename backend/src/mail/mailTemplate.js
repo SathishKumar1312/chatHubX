@@ -19,7 +19,7 @@ const VERIFICATION_EMAIL_TEMPLATE = `
     <p>Enter this code on the verification page to complete your registration.</p>
     <p>This code will expire in 15 minutes for security reasons.</p>
     <p>If you didn't create an account with us, please ignore this email.</p>
-    <p>Best regards,<br>Sathish kumar</p>
+    <p>Best regards,<br>chatHubX</p>
   </div>
   <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
     <p>This is an automated message, please do not reply to this email.</p>
@@ -44,10 +44,10 @@ const VERIFICATION_SUCCESS_EMAIL_TEMPLATE = `
     <p>Hi {userName},</p>
     <p>Thank you for verifying your email address. Your email verification was successful and your account is now fully activated.</p>
     <p>If you have any questions or need further assistance, feel free to contact our support team.</p>
-    <p>Best regards,<br>Sathish Kumar</p>
+    <p>Best regards,<br>chatHubX</p>
     <div class="footer" style="margin-top: 20px; font-size: 12px; color: #888;">
       <p>If you did not verify your email, please disregard this message.</p>
-      <p>&copy; 2025 Sathish Kumar. All rights reserved.</p>
+      <p>&copy; 2025 chatHubX owned by Sathish kumar. All rights reserved.</p>
     </div>
   </div>
   <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
@@ -85,7 +85,7 @@ const PASSWORD_RESET_SUCCESS_TEMPLATE = `
       <li>Avoid using the same password across multiple sites</li>
     </ul>
     <p>Thank you for helping us keep your account secure.</p>
-    <p>Best regards,<br>Sathish kumar</p>
+    <p>Best regards,<br>chatHubX</p>
   </div>
   <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
     <p>This is an automated message, please do not reply to this email.</p>
@@ -114,7 +114,7 @@ const PASSWORD_RESET_REQUEST_TEMPLATE = `
       <a href="{resetURL}" style="background-color: #073290; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
     </div>
     <p>This link will expire in 1 hour for security reasons.</p>
-    <p>Best regards,<br>Sathish kumar</p>
+    <p>Best regards,<br>chatHubX</p>
   </div>
   <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
     <p>This is an automated message, please do not reply to this email.</p>
