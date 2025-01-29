@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 const cors = require('cors');
 const connectToDB = require('./db/connectDB');
 
@@ -22,9 +23,13 @@ app.use(cookieParser());
 app.use('/api/auth',authRoute);
 app.use('/api/messages',messageRoute);
 
-app.get('/',(req,res)=>{
-	res.send('hello world!')
-})
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
+	});
+}
 
 server.listen(port,()=>{
 	console.log(`server is running on ${port}`)
