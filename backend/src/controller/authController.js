@@ -296,6 +296,21 @@ const updateUserName = async (req, res) => {
   }
 };
 
+const deleteUser = async(req,res)=>{
+  const userId = req.userId;
+
+  if(!userId){
+    return res.status(401).json({ success: false, message: "Unauthorized" });
+  }
+  try{
+    await User.findByIdAndDelete(userId);
+    res.clearCookie("token");
+    res.status(200).json({ success: true, message: "User deleted successfully" });
+  } catch(e){
+    res.status(400).json({ success: false, message: e.message });
+  }
+}
+
 module.exports = {
   signup,
   login,
@@ -305,5 +320,6 @@ module.exports = {
   resetPassword,
   checkAuth,
   updateProfilePic,
-  updateUserName
+  updateUserName,
+  deleteUser
 };

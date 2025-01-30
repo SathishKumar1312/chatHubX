@@ -10,6 +10,7 @@ export const useAuthStore = create((set, get) => ({
   isSigningUp: false,
   isLoggingIn: false,
   isUpdatingProfile: false,
+  isDeleting: false,
   isCheckingAuth: true,
   isAuthenticated: false,
   isLoading: false,
@@ -17,10 +18,13 @@ export const useAuthStore = create((set, get) => ({
   onlineUsers: [],
   socket: null,
 
+  setError: (data)=>{
+    set({error: data})
+  },
+
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("/auth/check");
-
       set({ authUser: res.data.user, isAuthenticated: true });
       get().connectSocket();
     } catch (error) {
@@ -35,26 +39,23 @@ export const useAuthStore = create((set, get) => ({
     set({ isSigningUp: true, isLoading: true });
     try {
       const res = await axiosInstance.post("/auth/signup", data);
-  
-      // Ensure the response has the user object
-      if (res.data.user) {
-        set({ authUser: res.data.user, isAuthenticated: true, isLoading: false });
-      } else {
-        throw new Error("User object not found in response");
-      }
+      set({ authUser: res.data.user, isAuthenticated: true, isLoading: false });
     } catch (error) {
       toast.error(error.response?.data?.message);
+      set({
+				isLoading: false,
+				error: error.response.data.message || "Error in signup",
+			});
     } finally {
       set({ isSigningUp: false });
     }
   },
-  
 
   verifyEmail: async (code) => {
 		set({ isLoading: true, error: null });
 		try {
 			const response = await axiosInstance.post(`/auth/verify-email`, { verificationToken: code });
-			set({ authUser: response.data.user, isAuthenticated: true, isLoading: false });
+			set({ authUser: response.data.user, isLoading: false });
       get().connectSocket();
 			return response.data;
 		} catch (error) {
@@ -141,6 +142,18 @@ export const useAuthStore = create((set, get) => ({
       toast.error(error.response.data.message);
     } finally {
       set({ isUpdatingProfile: false });
+    }
+  },
+
+  deleteUser: async()=>{
+    set({ isDeleting: true });
+    try {
+      await axiosInstance.delete("/auth/delete-user");
+      set({ authUser: null, isAuthenticated: false, isDeleting: false });
+      toast.success("User deleted Successfully!");
+      get().disconnectSocket();
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
   },
 

@@ -9,7 +9,7 @@ const EmailVerificationPage = () => {
 	const inputRefs = useRef([]);
 	const navigate = useNavigate();
 
-	let { error, isLoading, verifyEmail } = useAuthStore();
+	const { error, isLoading, verifyEmail, setError } = useAuthStore();
 
 	const handleChange = (index, value) => {
 		const newCode = [...code];
@@ -62,6 +62,14 @@ const EmailVerificationPage = () => {
 			handleSubmit(new Event("submit"));
 		}
 	}, [code]);
+
+	useEffect(() =>{
+		inputRefs.current[0].focus()
+		if(error == "Email already exists and is verified"){
+			navigate('/login');
+		}
+		setError("")
+	},[])
 
 	return (
 		<div className='h-screen flex flex-col align-middle justify-center bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'>

@@ -3,7 +3,7 @@ const authController = require('../controller/authController');
 const protectedRoute = require('../middleware/protectedRoute');
 const router = express.Router();
 
-const {signup, login, logout, verifyEmail, forgotPassword, resetPassword, checkAuth, updateProfilePic, updateUserName} = authController;
+const {signup, login, logout, verifyEmail, forgotPassword, resetPassword, checkAuth, updateProfilePic, updateUserName, deleteUser} = authController;
 
 router.get('/check', protectedRoute, checkAuth);
 
@@ -22,6 +22,8 @@ router.post('/reset-password/:resetToken', resetPassword);
 router.put('/update-profilepic', protectedRoute, updateProfilePic);
 
 router.put('/update-username', protectedRoute, updateUserName);
+
+router.delete('/delete-user', protectedRoute, deleteUser);
 
 
 module.exports = router;
