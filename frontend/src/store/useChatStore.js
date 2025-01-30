@@ -35,10 +35,13 @@ export const useChatStore = create((set, get) => ({
     }
   },
   sendMessage: async (messageData) => {
-    set({isLoading: true});
+    set({ isLoading: true });
     const { selectedUser, messages } = get();
     try {
-      const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData);
+      const res = await axiosInstance.post(
+        `/messages/send/${selectedUser._id}`,
+        messageData
+      );
       set({ messages: [...messages, res.data.newMessage], isLoading: false });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -51,8 +54,19 @@ export const useChatStore = create((set, get) => ({
 
     const socket = useAuthStore.getState().socket;
 
-    socket.on("newMessage", (newMessage) => {
+    socket.on("newMessage", ({ newMessage, sender }) => {
       const isMessageSentFromSelectedUser = newMessage.senderId === selectedUser._id;
+      if(selectedUser._id !== sender._id) {
+        toast.success(`New message from ${sender.fullName}: ${newMessage.text}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
       if (!isMessageSentFromSelectedUser) return;
 
       set({

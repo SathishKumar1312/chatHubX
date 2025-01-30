@@ -1,4 +1,5 @@
 const connectDB = require("./src/db/connectDB");
+const Message = require("./src/model/Message.js");
 const User = require('./src/model/User.js');
 
 require('dotenv').config();
@@ -103,7 +104,7 @@ const seedDatabase = async () => {
   try {
     await connectDB();
 
-    await User.insertMany(seedUsers);
+    await Message.deleteMany();
     console.log("Database seeded successfully");
   } catch (error) {
     console.error("Error seeding database:", error);

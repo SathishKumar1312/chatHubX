@@ -86,10 +86,12 @@ const sendMessage = async (req, res) => {
 
         await newMessage.save();
 
+        const sender = await User.findById(senderId).select("-password");
+
         // socket.io functions here
         const receiverSocketId = getReceiverSocketId(receiverId);
         if (receiverSocketId) {
-            io.to(receiverSocketId).emit("newMessage", newMessage);
+            io.to(receiverSocketId).emit("newMessage", {newMessage,sender});
         }
 
         res.status(201).json({ success: true, message: "message sent successfully", newMessage });
