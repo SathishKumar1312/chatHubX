@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 
 const EmailVerificationPage = () => {
 	const [code, setCode] = useState(["", "", "", "", "", ""]);
+	const [btnState, setBtnState] = useState(false);
 	const inputRefs = useRef([]);
 	const navigate = useNavigate();
 
@@ -82,8 +83,14 @@ const EmailVerificationPage = () => {
 				<h2 className='text-3xl font-bold mb-6 text-center bg-gradient-to-r from-blue-400 to-emerald-500 text-transparent bg-clip-text'>
 					Verify Your Email
 				</h2>
-				<p className='text-center text-gray-300 mb-6'>Enter the 6-digit code sent to your email address.</p>
-
+				<p className='text-center text-gray-300'>Enter the 6-digit code sent to your email address.</p>
+				<p className="cursor-pointer mt-2 mb-6 text-center text-secondary" onClick={()=>setBtnState(!btnState)}>Mail not Received?</p>
+				{btnState && <>
+					<ol className="mb-4 mt-0">
+						<li className="mb-2">1. Check in the Spam once! Even though it&apos;s not a spam, google mistakenly identifies it as a spam.</li>
+						<li>2. Check the Mail address once again . Make sure you entered the correct email address.</li>
+					</ol>
+				</>}
 				<form onSubmit={handleSubmit} className='space-y-6'>
 					<div className='flex justify-between'>
 						{code.map((digit, index) => (
